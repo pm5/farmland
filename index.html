@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>農地</title>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
+    <script src="//cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+    <style>
+      body { margin: 0; padding: 0; }
+      html, body, #map { height: 100%; width: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function osmLayer () {
+        return L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        });
+      }
+
+      function SGWLayer () {
+        return function () {
+          var map = this;
+          d3.csv('data/sgw-epa-geom.csv', function (data) {
+            data
+              .filter(d => d.GeoJSON)
+              .forEach(d => {
+                L.geoJson(JSON.parse(d.GeoJSON))
+                  .addTo(map)
+              })
+          })
+        };
+      }
+
+      var map = L.map('map')
+        .addLayer(osmLayer())
+        .setView([24.47465, 120.72052], 8)
+        .whenReady(SGWLayer())
+    </script>
+  </body>
+</html>
