@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim: encoding=utf-8:
 
 import csv
 import requests
@@ -8,8 +7,8 @@ import geomet.wkt
 import time
 import sys
 
-csvfile = open('land-pollution-regulated-area.csv', 'rb')
-outfile = open('out.csv', 'w')
+csvfile = open('data/sgw-epa.csv', 'rb')
+outfile = open('data/sgw-epa-geom.csv', 'w')
 landreader = csv.DictReader(csvfile)
 landwriter = csv.DictWriter(outfile, landreader.fieldnames)
 landwriter.writeheader()
