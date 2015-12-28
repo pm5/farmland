@@ -7,7 +7,7 @@ import geomet.wkt
 import time
 import sys
 
-csvfile = open('data/sgw-epa.csv', 'rb')
+csvfile = open('data/sgw-epa.csv', 'r')
 outfile = open('data/sgw-epa-geom.csv', 'w')
 landreader = csv.DictReader(csvfile)
 landwriter = csv.DictWriter(outfile, landreader.fieldnames)
@@ -27,7 +27,7 @@ for cells in landreader:
             })
         except Exception:
             sys.stderr.write("\n")
-            print query_url
+            print(query_url)
     landwriter.writerow(cells)
     limit = limit - 1
     time.sleep(10)
