@@ -13,6 +13,14 @@
   <body>
     <div id="map"></div>
     <script>
+      var labels = {
+        'CUAR_OVER': '銅',
+        'ZNAR_OVER': '鋅',
+        'CDAR_OVER': '鉻',
+        'CRAR_OVER': '鎘',
+        'NIAR_OVER': '鎳',
+        'PBAR_OVER': '鉛',
+      }
       function osmLayer () {
         return L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -27,7 +35,10 @@
               .filter(d => d.GeoJSON)
               .forEach(d => {
                 L.geoJson(JSON.parse(d.GeoJSON), {
-                    style: () => ({ color: '#f00' })
+                    style: () => ({ color: '#f00' }),
+                    onEachFeature: (feature, layer) => {
+                      layer.bindPopup(d['縣市別'] + d['場址名稱'] + '<div>' + d['土壤/地下水污染物'] + '</div><div>' + d['污染情形'] + '</div><div>公告為控制場址 ' + d['公告為控制場址日期'] + '</div><div>公告解除控制場址 ' + d['公告解除控制場址日期'] + '</div>')
+                    }
                   }).addTo(layer)
               })
           })
@@ -42,6 +53,7 @@
             data
               .forEach(d => {
                 L.circle([d.Y, d.X], 125)
+                  .bindPopup('重金屬超標 ' + ['CUAR_OVER', 'ZNAR_OVER', 'CDAR_OVER', 'CRAR_OVER', 'NIAR_OVER', 'PBAR_OVER'].filter(n => d[n] === '1').map(n => labels[n]).join(' '))
                   .addTo(layer)
               })
           })
