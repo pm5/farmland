@@ -53,7 +53,7 @@
             data
               .forEach(d => {
                 L.circle([d.Y, d.X], 125)
-                  .bindPopup('重金屬超標 ' + ['CUAR_OVER', 'ZNAR_OVER', 'CDAR_OVER', 'CRAR_OVER', 'NIAR_OVER', 'PBAR_OVER'].filter(n => d[n] === '1').map(n => labels[n]).join(' '))
+                  .bindPopup(d.YEAR + ' 年檢測重金屬超標 ' + ['CUAR_OVER', 'ZNAR_OVER', 'CDAR_OVER', 'CRAR_OVER', 'NIAR_OVER', 'PBAR_OVER'].filter(n => d[n] === '1').map(n => labels[n]).join(' '))
                   .addTo(layer)
               })
           })

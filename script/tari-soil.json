@@ -89,5 +89,18 @@
     "baseColumnName": "PBAR_OVER",
     "expression": "jython:return cells['CUAR_OVER']['value'] or cells['ZNAR_OVER']['value'] or cells['CDAR_OVER']['value'] or cells['CRAR_OVER']['value'] or cells['NIAR_OVER']['value'] or cells['PBAR_OVER']['value']",
     "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column YEAR at index 10 based on column SNO using expression jython:import re\nreturn int(re.compile(r'GR(\\d+)').match(value).group(1)) + 1911",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "YEAR",
+    "columnInsertIndex": 10,
+    "baseColumnName": "SNO",
+    "expression": "jython:import re\nreturn int(re.compile(r'GR(\\d+)').match(value).group(1)) + 1911",
+    "onError": "set-to-blank"
   }
 ]
