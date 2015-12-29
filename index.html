@@ -20,23 +20,40 @@
       }
 
       function SGWLayer () {
-        return function () {
-          var map = this;
+        var layer = L.featureGroup()
+        layer.load = () => {
           d3.csv('data/sgw-epa-geom.csv', function (data) {
             data
               .filter(d => d.GeoJSON)
               .forEach(d => {
                 L.geoJson(JSON.parse(d.GeoJSON))
-                  .addTo(map)
+                  .addTo(layer)
               })
           })
-        };
+        }
+        return layer
+      }
+
+      var baseLayers = {
+        'OpenStreetMap': osmLayer()
+      }
+      var overlays = {
+        '環保署': SGWLayer()
+      }
+
+      function addLayerControl () {
+        return function () {
+          var map = this
+          L.control.layers(baseLayers, overlays).addTo(map)
+        }
       }
 
       var map = L.map('map')
-        .addLayer(osmLayer())
+        .addLayer(baseLayers['OpenStreetMap'])
+        .addLayer(overlays['環保署'])
         .setView([24.47465, 120.72052], 8)
-        .whenReady(SGWLayer())
+        .whenReady(addLayerControl())
+        .whenReady(overlays['環保署'].load)
     </script>
   </body>
 </html>
