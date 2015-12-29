@@ -26,8 +26,9 @@
             data
               .filter(d => d.GeoJSON)
               .forEach(d => {
-                L.geoJson(JSON.parse(d.GeoJSON))
-                  .addTo(layer)
+                L.geoJson(JSON.parse(d.GeoJSON), {
+                    style: () => ({ color: '#f00' })
+                  }).addTo(layer)
               })
           })
         }
