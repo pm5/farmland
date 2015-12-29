@@ -22,7 +22,7 @@
       function SGWLayer () {
         var layer = L.featureGroup()
         layer.load = () => {
-          d3.csv('data/sgw-epa-geom.csv', function (data) {
+          d3.csv('data/sgw-epa-geom.csv', data => {
             data
               .filter(d => d.GeoJSON)
               .forEach(d => {
@@ -34,11 +34,26 @@
         return layer
       }
 
+      function TARILayer () {
+        var layer = L.featureGroup()
+        layer.load = () => {
+          d3.csv('data/tari-soil-over.csv', data => {
+            data
+              .forEach(d => {
+                L.circle([d.Y, d.X], 125)
+                  .addTo(layer)
+              })
+          })
+        }
+        return layer
+      }
+
       var baseLayers = {
         'OpenStreetMap': osmLayer()
       }
       var overlays = {
-        '環保署': SGWLayer()
+        '環保署': SGWLayer(),
+        '農試所': TARILayer(),
       }
 
       function addLayerControl () {
@@ -51,9 +66,11 @@
       var map = L.map('map')
         .addLayer(baseLayers['OpenStreetMap'])
         .addLayer(overlays['環保署'])
+        .addLayer(overlays['農試所'])
         .setView([24.47465, 120.72052], 8)
         .whenReady(addLayerControl())
         .whenReady(overlays['環保署'].load)
+        .whenReady(overlays['農試所'].load)
     </script>
   </body>
 </html>
