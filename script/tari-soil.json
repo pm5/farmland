@@ -1,0 +1,93 @@
+[
+  {
+    "op": "core/column-addition",
+    "description": "Create column CUAR_OVER at index 20 based on column CUAR using expression jython:return 1 if float(value) > 200 else 0",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "CUAR_OVER",
+    "columnInsertIndex": 20,
+    "baseColumnName": "CUAR",
+    "expression": "jython:return 1 if float(value) > 200 else 0",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column ZNAR_OVER at index 22 based on column ZNAR using expression jython:return True if float(value) > 600 else False",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "ZNAR_OVER",
+    "columnInsertIndex": 22,
+    "baseColumnName": "ZNAR",
+    "expression": "jython:return True if float(value) > 600 else False",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column CRAR_OVER at index 25 based on column CRAR using expression jython:return True if float(value) > 250 else False",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "CRAR_OVER",
+    "columnInsertIndex": 25,
+    "baseColumnName": "CRAR",
+    "expression": "jython:return True if float(value) > 250 else False",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column NIAR_OVER at index 27 based on column NIAR using expression jython:return True if float(value) > 200 else False",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "NIAR_OVER",
+    "columnInsertIndex": 27,
+    "baseColumnName": "NIAR",
+    "expression": "jython:return True if float(value) > 200 else False",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column PBAR_OVER at index 29 based on column PBAR using expression jython:return True if float(value) > 500 else False",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "PBAR_OVER",
+    "columnInsertIndex": 29,
+    "baseColumnName": "PBAR",
+    "expression": "jython:return True if float(value) > 500 else False",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column CDAR_OVER at index 24 based on column CDAR using expression jython:return True if float(value) > 5 else False",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "CDAR_OVER",
+    "columnInsertIndex": 24,
+    "baseColumnName": "CDAR",
+    "expression": "jython:return True if float(value) > 5 else False",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column OVER at index 31 based on column PBAR_OVER using expression jython:return cells['CUAR_OVER']['value'] or cells['ZNAR_OVER']['value'] or cells['CDAR_OVER']['value'] or cells['CRAR_OVER']['value'] or cells['NIAR_OVER']['value'] or cells['PBAR_OVER']['value']",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "OVER",
+    "columnInsertIndex": 31,
+    "baseColumnName": "PBAR_OVER",
+    "expression": "jython:return cells['CUAR_OVER']['value'] or cells['ZNAR_OVER']['value'] or cells['CDAR_OVER']['value'] or cells['CRAR_OVER']['value'] or cells['NIAR_OVER']['value'] or cells['PBAR_OVER']['value']",
+    "onError": "set-to-blank"
+  }
+]
