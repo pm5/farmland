@@ -5,6 +5,8 @@
     <script src="//d3js.org/d3.v3.min.js"></script>
     <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
     <script src="//cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+    <script src="GIBSMetadata.js"></script>
+    <script src="GIBSLayer.js"></script>
     <style>
       body { margin: 0; padding: 0; }
       html, body, #map { height: 100%; width: 100%; }
@@ -20,6 +22,18 @@
         'CRAR_OVER': '鎘',
         'NIAR_OVER': '鎳',
         'PBAR_OVER': '鉛',
+      }
+      function GoogleLayer () {
+        return L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+        })
+      }
+      function GIBSLayer () {
+        return new L.GIBSLayer('MODIS_Aqua_CorrectedReflectance_TrueColor', {
+          date: new Date('2015/04/01'),
+          transparent: true
+        })
       }
       function osmLayer () {
         return L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -62,7 +76,9 @@
       }
 
       var baseLayers = {
-        'OpenStreetMap': osmLayer()
+        'OpenStreetMap': osmLayer(),
+        'Google Satellite': GoogleLayer(),
+        'NASA': GIBSLayer()
       }
       var overlays = {
         '環保署': SGWLayer(),
@@ -78,6 +94,7 @@
 
       var map = L.map('map')
         .addLayer(baseLayers['OpenStreetMap'])
+        .addLayer(baseLayers['Google Satellite'])
         .addLayer(overlays['環保署'])
         .addLayer(overlays['農試所'])
         .setView([24.47465, 120.72052], 8)
