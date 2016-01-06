@@ -66,7 +66,10 @@
           d3.csv('data/tari-soil-over.csv', data => {
             data
               .forEach(d => {
-                L.circle([d.Y, d.X], 125)
+                L.circle([d.Y, d.X], 125, {
+                  color: '#ff0',
+                  opacity: 0.8
+                })
                   .bindPopup(d.YEAR + ' 年農試所檢測重金屬超標 ' + ['CUAR_OVER', 'ZNAR_OVER', 'CDAR_OVER', 'CRAR_OVER', 'NIAR_OVER', 'PBAR_OVER'].filter(n => d[n] === '1').map(n => labels[n]).join(' '))
                   .addTo(layer)
               })
@@ -88,7 +91,9 @@
       function addLayerControl () {
         return function () {
           var map = this
-          L.control.layers(baseLayers, overlays).addTo(map)
+          L.control.layers(baseLayers, overlays, {
+            collapsed: false
+          }).addTo(map)
         }
       }
 
