@@ -5,6 +5,8 @@
     <script src="//d3js.org/d3.v3.min.js"></script>
     <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
     <script src="//cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+    <script src="leaflet.groupedlayercontrol.min.js"></script>
+    <link rel="stylesheet" href="leaflet.groupedlayercontrol.min.css"/>
     <script src="GIBSMetadata.js"></script>
     <script src="GIBSLayer.js"></script>
     <style>
@@ -84,14 +86,18 @@
         'NASA': GIBSLayer()
       }
       var overlays = {
-        '環保署': SGWLayer(),
-        '農試所': TARILayer(),
+        '環保署農地列管': {
+          '曾列管': SGWLayer(),
+        },
+        '農試所土壤調查': {
+          '具污染潛勢': TARILayer(),
+        }
       }
 
       function addLayerControl () {
         return function () {
           var map = this
-          L.control.layers(baseLayers, overlays, {
+          L.control.groupedLayers(baseLayers, overlays, {
             collapsed: false
           }).addTo(map)
         }
@@ -100,12 +106,12 @@
       var map = L.map('map')
         .addLayer(baseLayers['OpenStreetMap'])
         .addLayer(baseLayers['Google Satellite'])
-        .addLayer(overlays['環保署'])
-        .addLayer(overlays['農試所'])
+        .addLayer(overlays['環保署農地列管']['曾列管'])
+        .addLayer(overlays['農試所土壤調查']['具污染潛勢'])
         .setView([24.47465, 120.72052], 8)
         .whenReady(addLayerControl())
-        .whenReady(overlays['環保署'].load)
-        .whenReady(overlays['農試所'].load)
+        .whenReady(overlays['環保署農地列管']['曾列管'].load)
+        .whenReady(overlays['農試所土壤調查']['具污染潛勢'].load)
     </script>
   </body>
 </html>
