@@ -1,0 +1,344 @@
+[
+  {
+    "op": "core/column-addition",
+    "description": "Create column 段名 at index 5 based on column 場址地號 using expression grel:value.replace(/\\(.*?\\)/, \"\").replace(cells[\"縣市別\"].value, \"\").replace(/\\d.*$/, \"\").replace(/.*區/, '').replace(/^(..(鄉|鎮|巿|市|里))*/, \"\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "record-based"
+    },
+    "newColumnName": "段名",
+    "columnInsertIndex": 5,
+    "baseColumnName": "場址地號",
+    "expression": "grel:value.replace(/\\(.*?\\)/, \"\").replace(cells[\"縣市別\"].value, \"\").replace(/\\d.*$/, \"\").replace(/.*區/, '').replace(/^(..(鄉|鎮|巿|市|里))*/, \"\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column 地號 at index 5 based on column 場址地號 using expression grel:if(value.indexOf('無地號') >= 0, '', value.match(/.*?([\\d\\-]+).*/)[0])",
+    "engineConfig": {
+      "facets": [
+        {
+          "invert": false,
+          "expression": "value",
+          "selectError": false,
+          "omitError": false,
+          "selectBlank": false,
+          "name": "地號",
+          "omitBlank": false,
+          "columnName": "地號",
+          "type": "list",
+          "selection": [
+            {
+              "v": {
+                "v": "-12",
+                "l": "-12"
+              }
+            }
+          ]
+        }
+      ],
+      "mode": "record-based"
+    },
+    "newColumnName": "地號",
+    "columnInsertIndex": 5,
+    "baseColumnName": "場址地號",
+    "expression": "grel:if(value.indexOf('無地號') >= 0, '', value.match(/.*?([\\d\\-]+).*/)[0])",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column 段名 to position 5",
+    "columnName": "段名",
+    "index": 5
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "嘉梨段詔安厝小號"
+        ],
+        "to": "嘉梨段詔安厝小段"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "埔心段三塊厝小塊"
+        ],
+        "to": "埔心段三塊厝小段"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "樹下"
+        ],
+        "to": "樹下段"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "水源段旁"
+        ],
+        "to": "水源段"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "無"
+        ],
+        "to": ""
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "詹厝園"
+        ],
+        "to": "詹厝園段"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "詹厝園段國有地無地號-"
+        ],
+        "to": ""
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "詹厝園段國有無地號-"
+        ],
+        "to": ""
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "詹厝園段無地號國有地-"
+        ],
+        "to": ""
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column 段名",
+    "engineConfig": {
+      "facets": [
+        {
+          "query": "[^段 ]$",
+          "name": "段名",
+          "caseSensitive": false,
+          "columnName": "段名",
+          "type": "text",
+          "mode": "regex"
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "段名",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "車路墘"
+        ],
+        "to": "車路墘段"
+      }
+    ]
+  }
+]
