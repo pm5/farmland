@@ -102,7 +102,7 @@
       }
       var overlays = {
         '環保署農地列管': {
-          '解除列管': SGWLayer({ color: '#00f' }),
+          '解除列管': SGWLayer({ color: '#ff9933' }),
           '列管中': SGWLayer({ restricted: true, color: '#f00' }),
         },
         '農試所土壤調查': {
@@ -125,11 +125,11 @@
       var map = L.map('map')
         .addLayer(baseLayers['OpenStreetMap'])
         .addLayer(baseLayers['Google Satellite'])
-        .addLayer(overlays['環保署農地列管']['曾列管'])
+        .addLayer(overlays['環保署農地列管']['解除列管'])
         .addLayer(overlays['農試所土壤調查']['具污染潛勢'])
         .setView([24.47465, 120.72052], 8)
         .whenReady(addLayerControl())
-        .whenReady(overlays['環保署農地列管']['曾列管'].load)
+        .whenReady(overlays['環保署農地列管']['解除列管'].load)
         .whenReady(overlays['環保署農地列管']['列管中'].load)
         .whenReady(overlays['農試所土壤調查']['具污染潛勢'].load)
         .whenReady(overlays['綜合結果']['具污染潛勢而未列管'].load)
