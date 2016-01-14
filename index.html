@@ -43,15 +43,19 @@
         });
       }
 
-      function SGWLayer () {
+      function SGWLayer (prop) {
+        prop = prop || {}
+        var filter = (prop.restricted ?
+            d => d.GeoJSON && d['場址列管狀態'] === '公告為控制場址'
+            : d => d.GeoJSON)
         var layer = L.featureGroup()
         layer.load = () => {
           d3.csv('data/sgw-epa-geom.csv', data => {
             data
-              .filter(d => d.GeoJSON)
+              .filter(filter)
               .forEach(d => {
                 L.geoJson(JSON.parse(d.GeoJSON), {
-                    style: () => ({ color: '#f00' }),
+                    style: () => ({ color: prop.color || '#f00' }),
                     onEachFeature: (feature, layer) => {
                       layer.bindPopup(d['縣市別'] + d['場址名稱'] + '<div>' + d['土壤/地下水污染物'] + '</div><div>' + d['污染情形'] + '</div><div>公告為控制場址 ' + d['公告為控制場址日期'] + '</div><div>公告解除控制場址 ' + d['公告解除控制場址日期'] + '</div>')
                     }
@@ -62,15 +66,22 @@
         return layer
       }
 
-      function TARILayer () {
+      function TARILayer (prop) {
+        var prop = prop || {}
+        var filter = (prop.restricted === true ?
+            d => d.RESTRICTED === '1'
+            : (prop.restricted === false ?
+              d => d.RESTRICTED === '0'
+              : d => true))
         var layer = L.featureGroup()
         layer.load = () => {
           d3.csv('data/tari-soil-over.csv', data => {
             data
+              .filter(filter)
               .forEach(d => {
                 L.circle([d.Y, d.X], 125, {
-                  color: '#ff0',
-                  opacity: 0.8
+                  color: prop.color || '#ff0',
+                  opacity: prop.opacity || 0.8
                 })
                   .bindPopup(d.YEAR + ' 年農試所檢測重金屬超標 ' + ['CUAR_OVER', 'ZNAR_OVER', 'CDAR_OVER', 'CRAR_OVER', 'NIAR_OVER', 'PBAR_OVER'].filter(n => d[n] === '1').map(n => labels[n]).join(' '))
                   .addTo(layer)
@@ -87,10 +98,14 @@
       }
       var overlays = {
         '環保署農地列管': {
-          '曾列管': SGWLayer(),
+          '曾列管': SGWLayer({ color: '#00f' }),
+          '列管中': SGWLayer({ restricted: true, color: '#f00' }),
         },
         '農試所土壤調查': {
-          '具污染潛勢': TARILayer(),
+          '具污染潛勢': TARILayer({ opacity: 0.3 }),
+        },
+        '綜合結果': {
+          '具污染潛勢而未列管': TARILayer({ restricted: false, opacity: 0.8 })
         }
       }
 
@@ -111,7 +126,9 @@
         .setView([24.47465, 120.72052], 8)
         .whenReady(addLayerControl())
         .whenReady(overlays['環保署農地列管']['曾列管'].load)
+        .whenReady(overlays['環保署農地列管']['列管中'].load)
         .whenReady(overlays['農試所土壤調查']['具污染潛勢'].load)
+        .whenReady(overlays['綜合結果']['具污染潛勢而未列管'].load)
     </script>
   </body>
 </html>
