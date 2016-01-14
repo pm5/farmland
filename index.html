@@ -17,6 +17,9 @@
   <body>
     <div id="map"></div>
     <script>
+      // (equatorial) R = 6378137m in WGS84
+      var m2d125Y = 0.0022457882102988034
+      var m2d125X = 0.002470367031328684
       var labels = {
         'CUAR_OVER': '銅',
         'ZNAR_OVER': '鋅',
@@ -55,7 +58,7 @@
               .filter(filter)
               .forEach(d => {
                 L.geoJson(JSON.parse(d.GeoJSON), {
-                    style: () => ({ color: prop.color || '#f00' }),
+                    style: () => ({ color: prop.color || '#f00', weight: 1 }),
                     onEachFeature: (feature, layer) => {
                       layer.bindPopup(d['縣市別'] + d['場址名稱'] + '<div>' + d['土壤/地下水污染物'] + '</div><div>' + d['污染情形'] + '</div><div>公告為控制場址 ' + d['公告為控制場址日期'] + '</div><div>公告解除控制場址 ' + d['公告解除控制場址日期'] + '</div>')
                     }
@@ -79,7 +82,8 @@
             data
               .filter(filter)
               .forEach(d => {
-                L.circle([d.Y, d.X], 125, {
+                L.rectangle([[d.Y - m2d125Y, d.X - m2d125X], [d.Y + m2d125Y, d.X + m2d125X]], {
+                  weight: 1,
                   color: prop.color || '#ff0',
                   opacity: prop.opacity || 0.8
                 })
