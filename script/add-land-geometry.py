@@ -19,11 +19,16 @@ for cells in landreader:
     query_url = 'http://twland.ronny.tw/index/search?lands[]=' + cells['縣市別'] + ',' + cells['段名'] + ',' + cells['地號']
     r = requests.get(query_url)
     if len(r.json()['features']) > 0:
+        r.json()['features']
         cells['GeoJSON'] = json.dumps(r.json())
         try:
+            i = 0
+            while r.json()['features'][i]['geometry'] == None :
+                i = i + 1
+            # incomplete WKT
             cells['WKT'] = geomet.wkt.dumps({
                 'type': 'Polygon',
-                'coordinates': r.json()['features'][0]['geometry']['coordinates'][0]
+                'coordinates': r.json()['features'][i]['geometry']['coordinates'][0]
             })
         except Exception:
             sys.stdout.write(query_url + "\n")
