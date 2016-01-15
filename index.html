@@ -50,7 +50,7 @@
         prop = prop || {}
         var filter = (prop.restricted ?
             d => d.GeoJSON && d['場址列管狀態'] === '公告為控制場址'
-            : d => d.GeoJSON)
+            : d => d.GeoJSON && d['場址列管狀態'] === '公告解除控制場址')
         var layer = L.featureGroup()
         layer.load = () => {
           d3.csv('data/sgw-epa-geom.csv', data => {
@@ -102,7 +102,7 @@
       }
       var overlays = {
         '環保署農地列管': {
-          '解除列管': SGWLayer({ color: '#ff9933' }),
+          '解除列管': SGWLayer({ restricted: false, color: '#ff9933' }),
           '列管中': SGWLayer({ restricted: true, color: '#f00' }),
         },
         '農試所土壤調查': {
