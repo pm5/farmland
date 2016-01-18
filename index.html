@@ -108,9 +108,6 @@
         '農試所土壤調查': {
           '具污染潛勢': TARILayer({ opacity: 0.4 }),
         },
-        '綜合結果': {
-          '具污染潛勢而未列管': TARILayer({ restricted: false, opacity: 0.9 })
-        }
       }
 
       function addLayerControl () {
@@ -132,7 +129,6 @@
         .whenReady(overlays['環保署農地列管']['列管中'].load)
         .whenReady(overlays['環保署農地列管']['解除列管'].load)
         .whenReady(overlays['農試所土壤調查']['具污染潛勢'].load)
-        .whenReady(overlays['綜合結果']['具污染潛勢而未列管'].load)
     </script>
   </body>
 </html>
